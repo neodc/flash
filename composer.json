@@ -1,16 +1,20 @@
 {
-    "name": "mdupaul/flash",
+    "name": "neodc/flash",
     "description": "Easy flash notifications with multiple messages",
     "license": "MIT",
     "authors": [
         {
             "name": "Maxime Dupaul",
             "email": "maximedupaul@gmail.com"
+        },
+        {
+            "name": "Noé De Cuyper",
+            "email": "noe@lal.be"
         }
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "~5.0"
+        "illuminate/support": "~5.0 || ^6.0"
     },
     "require-dev": {
         "mockery/mockery": "dev-master"
