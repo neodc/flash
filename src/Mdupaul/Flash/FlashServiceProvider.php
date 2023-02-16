@@ -7,17 +7,13 @@ class FlashServiceProvider extends ServiceProvider
 
     /**
      * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
      */
-    protected $defer = false;
+    protected bool $defer = false;
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->bind(
             'Mdupaul\Flash\SessionStore',
@@ -31,10 +27,8 @@ class FlashServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../../views', 'flash');
 
@@ -42,5 +36,4 @@ class FlashServiceProvider extends ServiceProvider
             __DIR__ . '/../../views' => base_path('resources/views/vendor/flash')
         ]);
     }
-
 }

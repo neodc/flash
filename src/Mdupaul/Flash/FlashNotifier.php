@@ -4,43 +4,27 @@ use Illuminate\Support\Facades\Session;
 
 class FlashNotifier
 {
-
-    /**
-     * The session writer.
-     *
-     * @var SessionStore
-     */
-    private $session;
-
     /**
      * Create a new flash notifier instance.
-     *
-     * @param SessionStore $session
      */
-    function __construct(SessionStore $session)
+    function __construct(private readonly SessionStore $session)
     {
-        $this->session = $session;
     }
 
     /**
      * Flash an information message.
-     *
-     * @param string $message
      */
-    public function info($message)
+    public function info(string $message): self
     {
-        $this->message($message, 'info');
+        $this->message($message);
 
         return $this;
     }
 
     /**
      * Flash a success message.
-     *
-     * @param  string $message
-     * @return $this
      */
-    public function success($message)
+    public function success(string $message): self
     {
         $this->message($message, 'success');
 
@@ -49,11 +33,8 @@ class FlashNotifier
 
     /**
      * Flash an error message.
-     *
-     * @param  string $message
-     * @return $this
      */
-    public function error($message)
+    public function error(string $message): self
     {
         $this->message($message, 'danger');
 
@@ -62,11 +43,8 @@ class FlashNotifier
 
     /**
      * Flash a warning message.
-     *
-     * @param  string $message
-     * @return $this
      */
-    public function warning($message)
+    public function warning(string $message): self
     {
         $this->message($message, 'warning');
 
@@ -75,11 +53,8 @@ class FlashNotifier
 
     /**
      * Flash a sticky message.
-     *
-     * @param  string $message
-     * @return $this
      */
-    public function sticky($message)
+    public function sticky(string $message): self
     {
         $this->message($message, 'sticky');
 
@@ -88,12 +63,8 @@ class FlashNotifier
 
     /**
      * Flash an overlay modal.
-     *
-     * @param  string $message
-     * @param  string $title
-     * @return $this
      */
-    public function overlay($message, $title = 'Notice')
+    public function overlay(string $message, string $title = 'Notice'): self
     {
         $this->message($message);
 
@@ -105,12 +76,8 @@ class FlashNotifier
 
     /**
      * Flash a general message.
-     *
-     * @param  string $message
-     * @param  string $level
-     * @return $this
      */
-    public function message($message, $level = 'info')
+    public function message(string $message, string $level = 'info'): self
     {
 
         $messages = [];
@@ -126,10 +93,8 @@ class FlashNotifier
 
     /**
      * Add an "important" flash to the session.
-     *
-     * @return $this
      */
-    public function important()
+    public function important(): self
     {
         $this->session->flash('flash_notification.important', true);
 
@@ -138,17 +103,17 @@ class FlashNotifier
 
     /**
      * Tells if there are notification messages
-     * @return mixed
      */
-    public function hasNotificationMessages() {
+    public function hasNotificationMessages(): bool
+    {
         return Session::has('flash_notification.messages');
     }
 
     /**
      * Returns the notification messages
-     * @return mixed
      */
-    public function getNotificationMessages() {
+    public function getNotificationMessages(): mixed
+    {
         return Session::get('flash_notification.messages');
     }
 }

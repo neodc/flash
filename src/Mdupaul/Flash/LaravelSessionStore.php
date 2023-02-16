@@ -2,30 +2,17 @@
 
 use Illuminate\Session\Store;
 
-class LaravelSessionStore implements SessionStore {
-
-    /**
-     * @var Store
-     */
-    private $session;
-
-    /**
-     * @param Store $session
-     */
-    function __construct(Store $session)
+class LaravelSessionStore implements SessionStore
+{
+    function __construct(private readonly Store $session)
     {
-        $this->session = $session;
     }
 
     /**
      * Flash a message to the session.
-     *
-     * @param $name
-     * @param $data
      */
-    public function flash($name, $data)
+    public function flash(string $name, mixed $data): void
     {
         $this->session->flash($name, $data);
     }
-
 }

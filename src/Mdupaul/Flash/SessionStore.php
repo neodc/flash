@@ -4,10 +4,7 @@ interface SessionStore {
 
     /**
      * Flash a message to the session.
-     *
-     * @param $name
-     * @param $data
      */
-    public function flash($name, $data);
+    public function flash(string $name, mixed $data): void;
 
 } 

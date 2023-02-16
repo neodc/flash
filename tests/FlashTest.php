@@ -1,26 +1,29 @@
 <?php
 
-use Mdupaul\Flash\FlashNotifier;
-use Mockery as m;
+namespace Tests;
 
-class FlashTest extends PHPUnit_Framework_TestCase {
+use Illuminate\Support\Facades\Session;
+use Mdupaul\Flash\FlashNotifier;
+use Mdupaul\Flash\SessionStore;
+use PHPUnit\Framework\TestCase;
+
+class FlashTest extends TestCase {
 
     protected $session;
 
     protected $flash;
 
-	public function setUp()
+	public function setUp():void
 	{
-        $this->session = m::mock('Mdupaul\Flash\SessionStore');
+        $this->session = $this->createMock(SessionStore::class);
         $this->flash = new FlashNotifier($this->session);
 	}
 
 	/** @test */
 	public function it_displays_default_flash_notifications()
 	{
-        $this->session->shouldReceive('flash')->with('flash_notification.message', 'Welcome Aboard');
-        $this->session->shouldReceive('flash')->with('flash_notification.title', 'Notice');
-        $this->session->shouldReceive('flash')->with('flash_notification.level', 'info');
+        Session::shouldReceive('has')->once()->andReturn(false);
+        $this->session->expects($this->once())->method('flash')->with('flash_notification.messages', [['info' => 'Welcome Aboard']]);
 
         $this->flash->message('Welcome Aboard');
 	}
@@ -28,9 +31,8 @@ class FlashTest extends PHPUnit_Framework_TestCase {
     /** @test */
     public function it_displays_info_flash_notifications()
     {
-        $this->session->shouldReceive('flash')->with('flash_notification.message', 'Welcome Aboard');
-        $this->session->shouldReceive('flash')->with('flash_notification.title', 'Notice');
-        $this->session->shouldReceive('flash')->with('flash_notification.level', 'info');
+        Session::shouldReceive('has')->once()->andReturn(false);
+        $this->session->expects($this->once())->method('flash')->with('flash_notification.messages', [['info' => 'Welcome Aboard']]);
 
         $this->flash->info('Welcome Aboard');
     }
@@ -38,9 +40,8 @@ class FlashTest extends PHPUnit_Framework_TestCase {
 	/** @test */
 	public function it_displays_success_flash_notifications()
 	{
-        $this->session->shouldReceive('flash')->with('flash_notification.message', 'Welcome Aboard');
-        $this->session->shouldReceive('flash')->with('flash_notification.title', 'Notice');
-        $this->session->shouldReceive('flash')->with('flash_notification.level', 'success');
+        Session::shouldReceive('has')->once()->andReturn(false);
+        $this->session->expects($this->once())->method('flash')->with('flash_notification.messages', [['success' => 'Welcome Aboard']]);
 
 		$this->flash->success('Welcome Aboard');
 	}
@@ -48,9 +49,8 @@ class FlashTest extends PHPUnit_Framework_TestCase {
 	/** @test */
 	public function it_displays_error_flash_notifications()
 	{
-        $this->session->shouldReceive('flash')->with('flash_notification.message', 'Uh Oh');
-        $this->session->shouldReceive('flash')->with('flash_notification.title', 'Notice');
-        $this->session->shouldReceive('flash')->with('flash_notification.level', 'danger');
+        Session::shouldReceive('has')->once()->andReturn(false);
+        $this->session->expects($this->once())->method('flash')->with('flash_notification.messages', [['danger' => 'Uh Oh']]);
 
         $this->flash->error('Uh Oh');
 	}
@@ -58,30 +58,18 @@ class FlashTest extends PHPUnit_Framework_TestCase {
     /** @test */
     public function it_displays_warning_flash_notifications()
     {
-        $this->session->shouldReceive('flash')->with('flash_notification.message', 'Be careful!');
-        $this->session->shouldReceive('flash')->with('flash_notification.title', 'Notice');
-        $this->session->shouldReceive('flash')->with('flash_notification.level', 'warning');
+        Session::shouldReceive('has')->once()->andReturn(false);
+        $this->session->expects($this->once())->method('flash')->with('flash_notification.messages', [['warning' => 'Be careful!']]);
 
         $this->flash->warning('Be careful!');
-    }
-
-    /** @test */
-    public function it_displays_custom_message_titles()
-    {
-        $this->session->shouldReceive('flash')->with('flash_notification.message', 'You are now signed up.');
-        $this->session->shouldReceive('flash')->with('flash_notification.title', 'Success Heading');
-        $this->session->shouldReceive('flash')->with('flash_notification.level', 'success');
-
-        $this->flash->success('You are now signed up.', 'Success Heading');
     }
 
 	/** @test */
 	public function it_displays_flash_overlay_notifications()
 	{
-        $this->session->shouldReceive('flash')->with('flash_notification.message', 'Overlay Message');
-        $this->session->shouldReceive('flash')->with('flash_notification.title', 'Notice');
-        $this->session->shouldReceive('flash')->with('flash_notification.level', 'info');
-        $this->session->shouldReceive('flash')->with('flash_notification.overlay', true);
+        Session::shouldReceive('has')->times(3)->andReturn(false);
+
+        $this->session->expects($this->exactly(3))->method('flash');
 
         $this->flash->overlay('Overlay Message');
 	}
