@@ -2,16 +2,14 @@
 
 use Illuminate\Support\Facades\Facade;
 
-class Flash extends Facade {
+class Flash extends Facade
+{
 
     /**
      * Get the binding in the IoC container
-     *
-     * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'flash';
     }
-
 } 

@@ -1,18 +1,15 @@
 <?php
 
-if ( ! function_exists('flash')) {
+if (!function_exists('flash')) {
 
     /**
      * Arrange for a flash message.
-     *
-     * @param  string|null $message
-     * @return \Mdupaul\Flash\FlashNotifier
      */
-    function flash($message = null)
+    function flash(?string $message = null): \Mdupaul\Flash\FlashNotifier
     {
         $notifier = app('flash');
 
-        if ( ! is_null($message)) {
+        if (!is_null($message)) {
             return $notifier->info($message);
         }
 
