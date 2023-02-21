@@ -82,7 +82,7 @@ class FlashNotifier
 
         $messages = [];
         if ($this->hasNotificationMessages()) {
-            $messages = $this->getNotificationMessages();
+            $messages = (array)$this->getNotificationMessages();
         }
         $messages[] = [$level => $message];
 
