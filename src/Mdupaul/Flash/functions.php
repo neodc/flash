@@ -7,6 +7,7 @@ if (!function_exists('flash')) {
      */
     function flash(?string $message = null): \Mdupaul\Flash\FlashNotifier
     {
+		/** @var \Mdupaul\Flash\FlashNotifier $notifier */
         $notifier = app('flash');
 
         if (!is_null($message)) {
