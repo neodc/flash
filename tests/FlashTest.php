@@ -5,6 +5,7 @@ namespace Tests;
 use Illuminate\Support\Facades\Session;
 use Mdupaul\Flash\FlashNotifier;
 use Mdupaul\Flash\SessionStore;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class FlashTest extends TestCase {
@@ -19,7 +20,7 @@ class FlashTest extends TestCase {
         $this->flash = new FlashNotifier($this->session);
 	}
 
-	/** @test */
+	#[Test]
 	public function it_displays_default_flash_notifications()
 	{
         Session::shouldReceive('has')->once()->andReturn(false);
@@ -28,7 +29,7 @@ class FlashTest extends TestCase {
         $this->flash->message('Welcome Aboard');
 	}
 
-    /** @test */
+	#[Test]
     public function it_displays_info_flash_notifications()
     {
         Session::shouldReceive('has')->once()->andReturn(false);
@@ -37,7 +38,7 @@ class FlashTest extends TestCase {
         $this->flash->info('Welcome Aboard');
     }
 
-	/** @test */
+	#[Test]
 	public function it_displays_success_flash_notifications()
 	{
         Session::shouldReceive('has')->once()->andReturn(false);
@@ -46,7 +47,7 @@ class FlashTest extends TestCase {
 		$this->flash->success('Welcome Aboard');
 	}
 
-	/** @test */
+	#[Test]
 	public function it_displays_error_flash_notifications()
 	{
         Session::shouldReceive('has')->once()->andReturn(false);
@@ -55,7 +56,7 @@ class FlashTest extends TestCase {
         $this->flash->error('Uh Oh');
 	}
 
-    /** @test */
+	#[Test]
     public function it_displays_warning_flash_notifications()
     {
         Session::shouldReceive('has')->once()->andReturn(false);
@@ -64,7 +65,7 @@ class FlashTest extends TestCase {
         $this->flash->warning('Be careful!');
     }
 
-	/** @test */
+	#[Test]
 	public function it_displays_flash_overlay_notifications()
 	{
         Session::shouldReceive('has')->times(3)->andReturn(false);
